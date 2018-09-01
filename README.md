@@ -3,7 +3,7 @@
 The examples are built upon `xtensor-python`, we highly recommend to install it with conda:
 `conda install xtensor-python -c quantstack -c conda-forge`.
 
-The notebooks required additional packages for data visualization:
+The notebooks require additional packages for data visualization:
 
 - ipywidgets
 - bqplot
@@ -29,5 +29,6 @@ is already installed.
 
 On Windows, symbolic links are not supported, thus the development mode does not change anything,
 so you have either to bump the build number of to manually remove the files from
-`$(CONDA_ENV)/Lib/site-packages` (a pyd file and the egg-info folder).
+`$(CONDA_ENV)/Lib/site-packages`. For each extension there is a `.pyd` file and a `.egg-info`
+folder to remove.
 
