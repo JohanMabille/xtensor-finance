@@ -1,5 +1,3 @@
-#include "closed_forms.hpp"
-
 // FORCE_IMPORT_ARRAY must be defined before including
 // any header from xtensor-python. Other files that
 // do not include any header from numpy can be included
@@ -7,6 +5,8 @@
 #define FORCE_IMPORT_ARRAY
 #include "xtensor-python/pyarray.hpp"
 #include "xtensor-python/pyvectorize.hpp"
+
+#include "closed_forms.hpp"
 
 namespace py = pybind11;
 
