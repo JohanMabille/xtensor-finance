@@ -15,21 +15,22 @@ namespace mc
         using tensor_type = xt::pytensor<double, 1>;
         using shape_type = tensor_type::shape_type;
         shape_type sh = {nb_path};
-        npy_intp nb_time = npy_intp(maturity * 365 + 1);
-        m_path.resize({nb_path, nb_time});
+        npy_intp nb_steps = npy_intp(maturity * 365 + 1);
+        m_path.resize({nb_path, nb_steps});
 
         xt::pytensor<double, 1> spot(sh, initial_value);
         xt::view(m_path, xt::all(), 0) = spot;
         xt::pytensor<double, 1> drift(sh);
         xt::pytensor<double, 1> vol(sh);
-        xt::pytensor<double, 2> w = xt::random::randn<double>({nb_path, nb_time});
+        double dt = maturity / nb_steps;
+        xt::pytensor<double, 2> dw = std::sqrt(dt) * xt::random::randn<double>({nb_path, nb_steps});
 
-        for(npy_intp i = 1; i < nb_time; ++i)
+        for(npy_intp i = 1; i < nb_steps; ++i)
         {
-            double t = maturity * double(i) / nb_time;
+            double t = dt * i;
             p_model->get_drift(t, spot, drift);
             p_model->get_volatility(t, spot, vol);
-            spot = spot * (1 + drift + xt::view(w, xt::all(), i) * vol);
+            spot = spot * (1 + drift * dt + xt::view(dw, xt::all(), i) * vol);
             xt::view(m_path, xt::all(), i) = spot;
         }
     }
