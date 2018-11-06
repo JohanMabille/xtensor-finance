@@ -1,8 +1,11 @@
 #ifndef CLOSED_FORMS_HPP
 #define CLOSED_FORMS_HPP
 
+#include <algorithm>
 #include <cmath>
 #include <limits>
+
+#include "xtensor-python/pyarray.hpp"
 
 namespace cf
 {
@@ -26,7 +29,7 @@ namespace cf
             {
                 return T(0);
             }
-            T tmp = std::log(fwd/strike) / stddev;
+            T tmp = std::log(fwd / strike) / stddev;
             T d1 = tmp + T(0.5) * stddev;
             T d2 = tmp - T(0.5) * stddev;
             T res;
@@ -67,6 +70,25 @@ namespace cf
         T df = std::exp(-rate * maturity);
         T fwd = spot / df;
         return df * std::max(is_call ? fwd - strike : strike - fwd, T(0));
+    }
+
+    using array_type = xt::pyarray<double, xt::layout_type::row_major>;
+
+    template <class T>
+    T distance_impl(const T& a, const T& b)
+    {
+        using std::sqrt;
+        return sqrt(a * a + b * b);
+    }
+
+    inline double distance_s(double a, double b)
+    {
+        return distance_impl(a, b);
+    }
+
+    inline array_type distance(const array_type& a, const array_type& b)
+    {
+        return distance_impl(a, b);
     }
 }
 

@@ -1,3 +1,4 @@
+#define XTENSOR_USE_XSIMD
 // FORCE_IMPORT_ARRAY must be defined before including
 // any header from xtensor-python. Other files that
 // do not include any header from numpy can be included
@@ -42,5 +43,9 @@ PYBIND11_MODULE(xtensor_closed_forms, m)
     m.def("ncdf", xt::pyvectorize(cf::ncdf<double>),
           "cumulative distribution function for the normal distribution",
           py::arg("x"));
+
+    m.def("distance_scalar", cf::distance_s);
+    m.def("distance_vectorized", xt::pyvectorize(cf::distance_s));
+    m.def("distance_array", cf::distance);
 }
 
