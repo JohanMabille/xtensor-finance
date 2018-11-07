@@ -7,24 +7,24 @@ PYBIND11_MODULE(pybind_closed_forms, m)
 {
     m.doc() = "Closed-forms for pricing vanilla options";
 
-    m.def("bs_discounted_price", cf::bs_discounted_price,
-          "computes the discounted blackscholes price of an option",
-          py::arg("spot"), py::arg("strike"), py::arg("volatility"),
-          py::arg("maturity"), py::arg("rate"), py::arg("is_call"));
-
-    m.def("bs_price", cf::bs_price,
-          "computes the blackscholes price of an option",
-          py::arg("fwd"), py::arg("strike"), py::arg("volatility"),
-          py::arg("maturity"), py::arg("is_call"));
+    m.def("ncdf", cf::ncdf,
+          "cumulative distribution function for the normal distribution",
+          py::arg("x"));
 
     m.def("bs_time_value", cf::bs_time_value,
           "computes the blackscholes time value of an option",
           py::arg("fwd"), py::arg("strike"), py::arg("volatility"),
           py::arg("maturity"));
 
-    m.def("ncdf", cf::ncdf,
-          "cumulative distribution function for the normal distribution",
-          py::arg("x"));
+    m.def("bs_price", cf::bs_price,
+          "computes the blackscholes price of an option",
+          py::arg("fwd"), py::arg("strike"), py::arg("volatility"),
+          py::arg("maturity"), py::arg("is_call"));
+
+    m.def("bs_discounted_price", cf::bs_discounted_price,
+          "computes the discounted blackscholes price of an option",
+          py::arg("spot"), py::arg("strike"), py::arg("volatility"),
+          py::arg("maturity"), py::arg("rate"), py::arg("is_call"));
 
     py::class_<cf::vanilla_payoff>(m, "VanillaPayoff")
         .def(py::init<double, double, bool>())

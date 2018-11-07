@@ -7,7 +7,6 @@ namespace cf
     double bs_time_value(double fwd, double strike, double volatility, double maturity);
     double bs_price(double fwd, double strike, double volatility, double maturity, bool is_call);
     double bs_discounted_price(double spot, double strike, double volatility, double maturity, double rate, bool is_call);
-    double vanilla_discounted_payoff(double spot, double strike, double maturity, double rate, bool is_call);
 
     class vanilla_payoff
     {
@@ -26,6 +25,7 @@ namespace cf
         bool m_is_call;
     };
 
+    double vanilla_discounted_payoff(double spot, double strike, double maturity, double rate, bool is_call);
     double vanilla_discounted_payoff(double spot, double rate, const vanilla_payoff& payoff);
 }
 
