@@ -16,9 +16,6 @@ namespace mc
 
         virtual void get_drift(double time, const vector_type& spot, vector_type& drift) const = 0;
         virtual void get_volatility(double time, const vector_type& spot, vector_type& vol) const = 0;
-
-        //virtual double drift(double spot, double time) const = 0;
-        //virtual double volatility(double spot, double time) const = 0;
     };
 
     class mc_engine
